@@ -1175,7 +1175,8 @@ def Update(metadata, media, lang, force):  # noqa: C901
 
         # Set season metadata via Plex HTTP API
         # (metadata.seasons[s].title doesn't persist through the agent proxy)
-        if season_playlist_map:
+        # Skip for playlist shows (multi-channel) - seasons are years there
+        if season_playlist_map and not is_playlist:
             plex_token = get_plex_token()
             Log.Info(  # type: ignore # noqa: F821
                 "Setting season metadata for {} seasons (token: {}).".format(
